@@ -1,18 +1,12 @@
-import { memo } from "react";
-import { useRouter } from "next/navigation";
+import { memo } from 'react';
 import { m } from "framer-motion";
 
-import Poster from "@/components/Poster";
-
 import { useGlobalContext } from "@/context/globalContext";
-import {
-  mainHeading,
-  maxWidth,
-  paragraph,
-  watchBtn,
-} from "@/constants/tailwindClasses";
+import { mainHeading, maxWidth, paragraph, watchBtn } from "@/constants/tailwindClasses";
 import { cn } from "@/utils/helper";
 import { useMotion } from "@/hooks/useMotion";
+import { useRouter } from 'next/navigation';
+import Poster from '@/components/Poster';
 
 const HeroSlide = ({ movie }: { movie: IMovie }) => {
   const { getTrailerId, setIsModalOpen } = useGlobalContext();
@@ -32,14 +26,14 @@ const HeroSlide = ({ movie }: { movie: IMovie }) => {
   };
 
   const handleWatchNow = () => {
-    router.push(`/movie/${id}`);
+    router.push(`/detail/movie/${id}`);
   };
 
   return (
     <div
       className={cn(
         maxWidth,
-        ` mx-auto flex items-center h-full  flex-row lg:gap-32 sm:gap-20`
+        ` mx-8 flex items-center h-full flex-row lg:gap-32 sm:gap-20`
       )}
     >
       <m.div
@@ -48,13 +42,11 @@ const HeroSlide = ({ movie }: { movie: IMovie }) => {
         animate="show"
         className="text-gray-300 sm:max-w-[80vw] max-w-[90vw]  md:max-w-[420px] font-nunito flex flex-col sm:gap-5 xs:gap-3 gap-[10px] sm:mb-8"
       >
-        <m.h2 variants={fadeDown} className={cn(mainHeading)}>
+        <m.h2 variants={fadeDown} className={cn(mainHeading, `text-4xl font-semibold`)}>
           {title}
         </m.h2>
         <m.p variants={fadeDown} className={paragraph}>
-          {overview.length > 180
-            ? `${overview.substring(0, 180)}...`
-            : overview}
+          {overview.length > 180 ? `${overview.substring(0, 180)}...` : overview}
         </m.p>
         <m.div
           variants={fadeDown}
@@ -63,7 +55,7 @@ const HeroSlide = ({ movie }: { movie: IMovie }) => {
           <button
             type="button"
             name="watch-trailer"
-            className={cn(watchBtn, `text-shadow watch-trailer`)}
+            className={cn(watchBtn, `px-4 py-2 text-shadow watch-trailer`)}
             onClick={showTrailer}
           >
             Watch trailer
@@ -73,7 +65,7 @@ const HeroSlide = ({ movie }: { movie: IMovie }) => {
             name="watch-now"
             className={cn(
               watchBtn,
-              ` bg-[#ff0000] shadow-glow
+              `px-4 py-2 bg-[#ff0000] shadow-glow
              text-shadow text-secColor `
             )}
             onClick={handleWatchNow}

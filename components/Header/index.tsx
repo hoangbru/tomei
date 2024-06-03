@@ -52,7 +52,7 @@ const Header = () => {
   }, []);
 
   useEffect(() => {
-    if (pathname.split("/").length > 3) {
+    if (pathname?.split("/").length > 3) {
       setIsNotFoundPage(true);
     } else {
       setIsNotFoundPage(false);

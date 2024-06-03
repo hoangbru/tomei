@@ -1,6 +1,5 @@
 import { memo, FC, useRef } from "react";
 import Link from "next/link";
-import { useInView } from "framer-motion";
 
 import MoviesSlides from "./MoviesSlides";
 import { SkeletonLoader } from "../Loader";
@@ -27,35 +26,11 @@ const Section: FC<SectionProps> = ({
   id,
   showSimilarShows,
 }) => {
-  const ref = useRef<HTMLDivElement | null>(null);
-  const inView = useInView(ref, {
-    margin: "420px",
-    once: true,
-  });
-
   const { theme } = useTheme();
   const { data, isLoading, error } = useGetMovies({
-    path: "/movie/popular",
-    q: `?api_key=${process.env.NEXT_PUBLIC_API_KEY}`,
+    path: `/${id ? `${category}/${id}` : category}/`,
+    type: `${showSimilarShows ? "similar" : type}`,
   });
-
-  // const {
-  //   data = { results: [] },
-  //   isLoading,
-  //   isError,
-  //   error,
-  // } = useGetShowsQuery(
-  //   {
-  //     category,
-  //     type,
-  //     page: 1,
-  //     showSimilarShows,
-  //     id,
-  //   },
-  //   {
-  //     skip: !inView,
-  //   }
-  // );
 
   const errorMessage = error ? getErrorMessage(error) : "";
 
@@ -69,7 +44,7 @@ const Section: FC<SectionProps> = ({
   );
 
   return (
-    <section className={sectionStyle} ref={ref}>
+    <section className={sectionStyle}>
       <div className="flex flex-row justify-between items-center mb-[22.75px]">
         <div className=" relative">
           <h3 className="sm:text-[22.25px] xs:text-[20px] text-[18.75px] dark:text-gray-50 sm:font-bold font-semibold">
@@ -90,7 +65,7 @@ const Section: FC<SectionProps> = ({
           <Error error={String(errorMessage)} className="h-full text-[18px]" />
         ) : (
           <MoviesSlides
-            movies={data.results.slice(0, 10)}
+            movies={data.results?.slice(0, 10)}
             category={category}
           />
         )}

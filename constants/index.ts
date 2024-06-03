@@ -17,8 +17,8 @@ export const navLinks: INavLink[] = [
     icon: TbMovie,
   },
   {
-    title: "tv series",
-    path: "/tv",
+    title: "sign in",
+    path: "/login",
     icon: MdOutlineLiveTv,
   },
 ];

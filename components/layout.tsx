@@ -13,9 +13,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
       <VideoModal />
       <SideBar />
       <Header />
-      <main
-        className={`className="dark:bg-black bg-mainColor lg:pb-14 md:pb-4 sm:pb-2 xs:pb-1 pb-0"`}
-      >
+      <main className="dark:bg-black bg-mainColor ">
         <ScrollToTop>
           <Suspense fallback={<Loader />}>{children}</Suspense>
         </ScrollToTop>

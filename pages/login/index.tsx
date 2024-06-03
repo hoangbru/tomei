@@ -4,6 +4,7 @@ import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import bcrypt from "bcryptjs";
 import { login, signup } from "@/api/auth";
 import { email_regex } from "@/utils/pattern";
+import Input from "@/components/form/form-input";
 
 type Variant = "LOGIN" | "REGISTER";
 
@@ -15,14 +16,11 @@ const Login = () => {
   const {
     register,
     handleSubmit,
-    watch,
+    control,
     formState: { errors },
   } = useForm<FieldValues>();
 
   const toggleVariant = useCallback(() => {
-    // errors.username = undefined;
-    // errors.email = undefined;
-    // errors.password = undefined;
     if (variant === "LOGIN") {
       setVariant("REGISTER");
     } else {
@@ -63,8 +61,8 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen p-24 bg-[url('/images/background.jpg')]">
-      <div className="flex flex-col justify-center items-center gap-20 rounded bg-black/70 px-16 py-12 h-[60%] max-w-xl">
+    <div className="flex justify-center items-center min-h-screen bg-[url('/images/background.jpg')]">
+      <div className="flex flex-col justify-center items-center gap-10 rounded bg-black/70 px-16 py-12 h-[80%] max-w-xl">
         <h3 className="text-white text-[2rem] font-bold">
           {variant === "LOGIN" ? "Sign In" : "Sign Up"}
         </h3>
@@ -74,35 +72,40 @@ const Login = () => {
           className="w-full flex flex-col gap-5"
         >
           {variant === "REGISTER" && (
-            <div className="form-group">
-              <input
-                type="username"
-                id="username"
-                {...register("username", {
-                  required: "Username is required",
-                  minLength: {
-                    value: 3,
-                    message: "Username must be at least 3 characters",
-                  },
-                  maxLength: {
-                    value: 50,
-                    message: "Username must be at most 50 characters",
-                  },
-                })}
-                className={`w-full my-2 p-6 h-16 rounded-lg ring-1 ring-inset focus:ring-2 focus:ring-inset${
-                  errors.username ? "focus:ring-red-500" : " "
-                }}`}
-                placeholder="Enter your username"
-              />
-              {errors.username && (
-                <span className="text-xl text-red-500">
-                  {errors.username.message as ReactNode}
-                </span>
-              )}
-            </div>
+            // <div className="form-group">
+            //   <input
+            //     type="username"
+            //     id="username"
+            //     {...register("username", {
+            //       required: "Username is required",
+            //       minLength: {
+            //         value: 3,
+            //         message: "Username must be at least 3 characters",
+            //       },
+            //       maxLength: {
+            //         value: 50,
+            //         message: "Username must be at most 50 characters",
+            //       },
+            //     })}
+            //     className={`w-full my-2 p-6 h-16 rounded-lg ring-1 ring-inset focus:ring-2 focus:ring-inset${
+            //       errors.username ? "focus:ring-red-500" : " "
+            //     }}`}
+            //     placeholder="Enter your username"
+            //   />
+            //   {errors.username && (
+            //     <span className="text-xl text-red-500">
+            //       {errors.username.message as ReactNode}
+            //     </span>
+            //   )}
+            // </div>
+            <Input
+              name="username"
+              control={control}
+              placeholder="Enter your username"
+            />
           )}
 
-          <div className="form-group">
+          {/* <div className="form-group">
             <input
               type="text"
               id="email"
@@ -145,36 +148,49 @@ const Login = () => {
             <span className="text-base text-red-500">
               {errors.password && (errors.password.message as ReactNode)}
             </span>
-          </div>
+          </div> */}
+
+          <Input
+            name="email"
+            control={control}
+            placeholder="Enter your email address"
+          />
+          <Input
+            name="email"
+            control={control}
+            placeholder="Enter your password address"
+          />
 
           {variant === "REGISTER" && (
-            <div className="form-group">
-              <input
-                type="password"
-                id="re-password"
-                {...register("rePassword", {
-                  required: "Confim password is required",
-                  validate: (value) =>
-                    value === watch("password") ||
-                    "Confirm password do not match",
-                })}
-                className={`w-full my-2 p-6 h-16 rounded-lg ring-1 ring-inset focus:ring-2 focus:ring-inset${
-                  errors.rePassword ? "focus:ring-red-500" : " "
-                }}`}
-                placeholder="Enter your rePassword address"
-              />
-              {errors.rePassword && (
-                <span className="text-xl text-red-500">
-                  {errors.rePassword.message as ReactNode}
-                </span>
-              )}
-            </div>
+            // <div className="form-group">
+            //   <input
+            //     type="password"
+            //     id="re-password"
+            //     {...register("rePassword", {
+            //       required: "Confim password is required",
+            //       validate: (value) =>
+            //         value === watch("password") ||
+            //         "Confirm password do not match",
+            //     })}
+            //     className={`w-full my-2 p-6 h-16 rounded-lg ring-1 ring-inset focus:ring-2 focus:ring-inset${
+            //       errors.rePassword ? "focus:ring-red-500" : " "
+            //     }}`}
+            //     placeholder="Enter your rePassword address"
+            //   />
+            //   {errors.rePassword && (
+            //     <span className="text-xl text-red-500">
+            //       {errors.rePassword.message as ReactNode}
+            //     </span>
+            //   )}
+            // </div>
+
+            <Input name="rePassword" control={control} className="w-full p-2" placeholder="Enter your rePassword address"/>
           )}
 
           <div className="form-submit">
             <button
               disabled={isLoading}
-              className="w-full flex justify-center items-center my-2 p-6 h-16 rounded-lg bg-red-600 text-white font-medium"
+              className="w-full py-2 flex justify-center items-center rounded-lg bg-red-600 text-white font-medium"
             >
               {variant === "LOGIN" ? "Sign In" : "Register"}
             </button>

@@ -23,7 +23,6 @@ module.exports = {
       colors: {
         black: "#191624",
       },
-
       textColor: {
         lightGray: "#F1EFEE",
         primary: "#FAFAFA",

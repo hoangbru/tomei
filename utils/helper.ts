@@ -37,6 +37,10 @@ export const getErrorMessage = (error: any) => {
   return errorMessage;
 };
 
+export const saveLocalStorage = (key: string, value: any) => {
+  localStorage.setItem(key, JSON.stringify(value));
+};
+
 export const saveTheme = (theme: string) => {
   localStorage.setItem("theme", theme);
 };
